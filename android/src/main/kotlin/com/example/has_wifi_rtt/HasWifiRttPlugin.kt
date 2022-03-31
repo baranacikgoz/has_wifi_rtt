@@ -1,29 +1,31 @@
 package com.example.has_wifi_rtt
 
+import android.annotation.TargetApi
+import android.content.pm.PackageManager
+import android.os.Build
 import androidx.annotation.NonNull
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
-import io.flutter.plugin.common.MethodChannel.Result
 
-/** HasWifiRttPlugin */
+/** HasRttFeaturePlugin */
 class HasWifiRttPlugin: FlutterPlugin, MethodCallHandler {
-  /// The MethodChannel that will the communication between Flutter and native Android
-  ///
-  /// This local reference serves to register the plugin with the Flutter Engine and unregister it
-  /// when the Flutter Engine is detached from the Activity
+
   private lateinit var channel : MethodChannel
+  private lateinit var packageManager: PackageManager
 
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
     channel = MethodChannel(flutterPluginBinding.binaryMessenger, "has_wifi_rtt")
+    packageManager = flutterPluginBinding.applicationContext.packageManager
     channel.setMethodCallHandler(this)
   }
 
+  @TargetApi(Build.VERSION_CODES.P)
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-    if (call.method == "getPlatformVersion") {
-      result.success("Android ${android.os.Build.VERSION.RELEASE}")
+    if (call.method == "checkRtt") {
+      result.success(packageManager.hasSystemFeature(PackageManager.FEATURE_WIFI_RTT))
     } else {
       result.notImplemented()
     }
