@@ -1,7 +1,7 @@
 name: has_wifi_rtt
 description: A flutter plugin package to check whether device has Wi-Fi RTT Scan Feature or not.
 version: 0.0.1
-homepage:
+homepage: https://github.com/baranacikgoz/has_wifi_rtt
 
 environment:
   sdk: ">=2.16.2 <3.0.0"
