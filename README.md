@@ -9,4 +9,4 @@ import 'package:has_wifi_rtt/has_wifi_rtt.dart'
 final bool response = await HasWifiRtt.checkRtt();
 ```  
 
-Also chech the example app.
+***Also check the example app.***
